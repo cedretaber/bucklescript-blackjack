@@ -1,0 +1,136 @@
+
+div.table-wrapper {
+  margin: 1em;
+  padding: 0.5em;
+  border: 1px solid #000;
+}
+
+div.table-wrapper span.cast-label {
+  margin: 0.5em 0.5em 0.5em;
+  padding-left: 0.5em;
+  font-size: 150%;
+  border-left: 0.2em solid #000;
+}
+
+div.play-table {
+  display: inline-flex;
+  font-family: "ヒラギノ角ゴ", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", Meiryo, sans-serif;
+  font-size: 200%;
+  width: 100%;
+  color: #eee;
+  background-color: #274;
+}
+
+.play-table div.card {
+  display: inline-block;
+  width: 8rem;
+  height: 12rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.play-table div.card div {
+  position: absolute;
+  width: 7rem;
+  height: 11rem;
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 11rem;
+  color: #000;
+  background-color: #fff;
+  border: 8px solid #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+.play-table div.card div.front span {
+  position: absolute;
+  font-size: 0.4em;
+  width: auto;
+  line-height: 1em;
+  left: 0;
+  top: 0;
+}
+
+.play-table div.card div.front span.red {
+  color: #a00;
+}
+
+.play-table div.card div.front span.middle {
+  line-height: unset;
+  font-size: 1em;
+  width: 100%;
+}
+
+.play-table div.card div.front span.bottom-right {
+  left: auto;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+.play-table div.card div.back {
+  background-color: #36c;
+  background-image: linear-gradient(45deg, #69e, 25%, transparent 25%, transparent 75%, #69e 75%, #69e), linear-gradient(-45deg, #69e, 25%, transparent 25%, transparent 75%, #69e 75%, #69e);
+  background-size: 0.4em 0.4em;
+}
+
+.button-table {
+  display: inline-flex;
+  padding-left: 2em;
+}
+
+.button-table button {
+  font-size: 200%;
+  display: inline-block;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  color: #333;
+  border: solid 1px #333;
+  border-radius: 0.1rem;
+  cursor: pointer;
+}
+
+.button-table button.disabled {
+  background-color: #ddd;
+  border: solid 1px #999;
+  color: #999;
+}
+
+.result-table {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-table .result {
+  font-size: 1000%;
+  font-weight: bold;
+  text-shadow: 2px 2px 1px #333, -2px 2px 1px #333, 2px -2px 1px #333, -2px -2px 1px #333;
+}
+
+.result-table .result.win {
+  color: #c33;
+}
+
+.result-table .result.lose {
+  color: #33c;
+}
+
+.result-table button {
+  font-size: 200%;
+  display: inline-block;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  border: solid 1px #333;
+  border-radius: 0.2rem;
+}
