@@ -38,14 +38,13 @@ let draw_card () =
 
 let sum_cards (cards : cards) =
   let sum, ac =
-    cards
-    |> List.map (fun (n, _) -> n)
-    |> List.fold_left begin fun (s, a) -> function
-          1 -> (s + 1), (a + 1)
-        | n when n = 11 || n = 12 || n = 13 -> (s + 10), a
-        | n -> (s + n), a
-      end
-      (0, 0) in
+    List.fold_left begin fun (s, a) -> function
+        1, _ -> (s + 1), (a + 1)
+      | n, _ when n = 11 || n = 12 || n = 13 -> (s + 10), a
+      | n, _ -> (s + n), a
+    end
+    (0, 0)
+    cards in
 
   let rec ret = fun sum -> function
       0 -> sum
@@ -61,9 +60,9 @@ let will_dealer_draw cards = sum_cards cards < 17
 let init () =
   Random.self_init ();
   {
-    player = [draw_card (); draw_card ()];
-    dealer = [draw_card (); draw_card ()];
-    last_action = NoAction
+    player= [draw_card (); draw_card ()];
+    dealer= [draw_card (); draw_card ()];
+    last_action= NoAction
   }
 
 let rec next action {player; dealer; last_action} =

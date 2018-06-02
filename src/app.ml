@@ -18,13 +18,13 @@ let render_card number mark =
   let str = mark_to_str mark in
   let colour =
     if is_red mark then "red" else "" in
-  div ~props:[%bs.obj {className= "card"}]
-    [| div ~props:[%bs.obj {className= "front"}]
-      [| span ~props:[%bs.obj {className= {j|top-left $colour|j}}] [| s {j|$number$str|j} |]
-       ; span ~props:[%bs.obj {className= {j|middle $colour|j}}] [| s str |]
-       ; span ~props:[%bs.obj {className= {j|bottom-right $colour|j}}] [| s {j|$number$str|j} |]
-      |]
+  div ~props:[%bs.obj {className= "card"}] [|
+    div ~props:[%bs.obj {className= "front"}] [|
+      span ~props:[%bs.obj {className= {j|top-left $colour|j}}] [| s {j|$number$str|j} |];
+      span ~props:[%bs.obj {className= {j|middle $colour|j}}] [| s str |];
+      span ~props:[%bs.obj {className= {j|bottom-right $colour|j}}] [| s {j|$number$str|j} |]
     |]
+  |]
 
 let show_cards cards =
   cards
@@ -70,49 +70,53 @@ let render (self : self) =
     | Game.NoAction ->
       let cards = show_cards dealer in
       let hided_cards =
-        div ~props:[%bs.obj {className= "card"}]
-          [| div ~props:[%bs.obj {className= "back"}] [||]
-          |] in
+        div ~props:[%bs.obj {className= "card"}] [|
+          div ~props:[%bs.obj {className= "back"}] [||]
+        |] in
       cards.(0) <- hided_cards;
       cards
     | _ -> show_cards dealer in
   let panel =
     match self.state with
     | Game.Playing, _ when last_action = Game.Stand ->
-      div ~props:[%bs.obj {className= "button-table"}]
-        [| button ~props:[%bs.obj {className= "disabled"; disabled= true}] [| s "Hit" |]
-          ; button ~props:[%bs.obj {onClick=(fun _ -> self.send Stand)}] [| s "Stand" |]
-        |]
+      div ~props:[%bs.obj {className= "button-table"}] [|
+        button ~props:[%bs.obj {className= "disabled"; disabled= true}] [| s "Hit" |];
+        button ~props:[%bs.obj {onClick=(fun _ -> self.send Stand)}] [| s "Stand" |]
+      |]
     | Game.Playing, _ ->
-      div ~props:[%bs.obj {className= "button-table"}]
-        [| button ~props:[%bs.obj {onClick=(fun _ -> self.send Hit)}] [| s "Hit" |]
-          ; button ~props:[%bs.obj {onClick=(fun _ -> self.send Stand)}] [| s "Stand" |]
-        |]
+      div ~props:[%bs.obj {className= "button-table"}] [|
+        button ~props:[%bs.obj {onClick=(fun _ -> self.send Hit)}] [| s "Hit" |];
+        button ~props:[%bs.obj {onClick=(fun _ -> self.send Stand)}] [| s "Stand" |]
+      |]
     | Game.Win, _ ->
-      div ~props:[%bs.obj {className= "result-table"}]
-        [| div
-            [| span ~props:[%bs.obj {className= "result win"}] [| s "You win!" |] |]
-          ; div
-            [| button ~props:[%bs.obj {onClick=(fun _ -> self.send Retry)}] [| s "Retry" |] |]
+      div ~props:[%bs.obj {className= "result-table"}] [|
+        div [|
+          span ~props:[%bs.obj {className= "result win"}] [| s "You win!" |]
+        |];
+        div [|
+          button ~props:[%bs.obj {onClick=(fun _ -> self.send Retry)}] [| s "Retry" |]
         |]
+      |]
     | Game.Lose, _ ->
-      div ~props:[%bs.obj {className= "result-table"}]
-        [| div
-            [| span ~props:[%bs.obj {className= "result lose"}] [| s "You lose!" |] |]
-          ; div
-            [| button ~props:[%bs.obj {onClick=(fun _ -> self.send Retry)}] [| s "Retry" |] |]
-        |] in
-  div
-    [| div ~props:[%bs.obj {className= "table-wrapper"}]
-        [| render_cards_table dealer_cards
-          ; span ~props:[%bs.obj {className= "cast-label"}] [| s "DEALER" |]
+      div ~props:[%bs.obj {className= "result-table"}] [|
+        div [|
+          span ~props:[%bs.obj {className= "result lose"}] [| s "You lose!" |]
+        |];
+        div [|
+          button ~props:[%bs.obj {onClick=(fun _ -> self.send Retry)}] [| s "Retry" |]
         |]
-      ; div ~props:[%bs.obj {className= "table-wrapper"}]
-        [| span ~props:[%bs.obj {className= "cast-label"}] [| s "PLAYER" |]
-          ; render_cards_table player_cards
-        |]
-      ; panel
-    |]
+      |] in
+  div [|
+    div ~props:[%bs.obj {className= "table-wrapper"}] [|
+      render_cards_table dealer_cards;
+      span ~props:[%bs.obj {className= "cast-label"}] [| s "DEALER" |]
+    |];
+    div ~props:[%bs.obj {className= "table-wrapper"}] [|
+      span ~props:[%bs.obj {className= "cast-label"}] [| s "PLAYER" |];
+      render_cards_table player_cards
+    |];
+    panel
+  |]
 
 let component = RR.reducerComponent "App"
 
