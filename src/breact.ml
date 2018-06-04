@@ -1,28 +1,26 @@
 module RR = ReasonReact
 
-let get_or_else = function
-    Some props -> props
-  | None -> Js.Obj.empty ()
+let unsafe_set dict key value =
+  Js.Dict.set dict key @@ Obj.magic value
 
-let div ?props children =
-  RR.createDomElement "div" ~props:(get_or_else props) children
+let create_dom_element tag props children =
+  RR.createDomElement tag ~props:(Obj.magic props) children
 
-let span ?props children =
-  RR.createDomElement "span" ~props:(get_or_else props) children
+let div ?class_name children =
+  let props = Js.Dict.empty () in
+  Option.may' class_name @@ unsafe_set props "className";
+  create_dom_element "div" props children
 
-let button ?props children =
-  RR.createDomElement "button" ~props:(get_or_else props) children
+let span ?class_name children =
+  let props = Js.Dict.empty () in
+  Option.may' class_name @@ unsafe_set props "className";
+  create_dom_element "span" props children
 
-let img ?props children =
-  RR.createDomElement "img" ~props:(get_or_else props) children
+let button ?class_name ?disabled ?on_click children =
+  let props = Js.Dict.empty () in
+  Option.may' class_name @@ unsafe_set props "className";
+  Option.may' disabled @@ unsafe_set props "disabled";
+  Option.may' on_click @@ unsafe_set props "onClick";
+  create_dom_element "button" props children
 
-let h2 ?props children =
-  RR.createDomElement "h2" ~props:(get_or_else props) children
-
-let code ?props children =
-  RR.createDomElement "code" ~props:(get_or_else props) children
-
-let p ?props children =
-  RR.createDomElement "p" ~props:(get_or_else props) children
-
-let s str = RR.string str
+let s = RR.string
