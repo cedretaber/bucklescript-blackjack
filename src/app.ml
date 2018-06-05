@@ -18,11 +18,11 @@ let render_card number mark =
   let str = mark_to_str mark in
   let colour =
     if is_red mark then "red" else "" in
-  div ~class_name:"card" [|
-    div ~class_name:"front" [|
-      span ~class_name:{j|top-left $colour|j} [| s {j|$number$str|j} |];
-      span ~class_name:{j|middle $colour|j} [| s str |];
-      span ~class_name:{j|bottom-right $colour|j} [| s {j|$number$str|j} |]
+  div (props ~className:"card" ()) [|
+    div (props ~className:"front" ()) [|
+      span (props ~className:{j|top-left $colour|j} ()) [| s {j|$number$str|j} |];
+      span (props ~className:{j|middle $colour|j} ()) [| s str |];
+      span (props ~className:{j|bottom-right $colour|j} ()) [| s {j|$number$str|j} |]
     |]
   |]
 
@@ -39,7 +39,7 @@ let show_cards cards =
   |> Array.of_list
 
 let render_cards_table cards =
-  div ~class_name:"play-table" cards
+  div (props ~className:"play-table" ()) cards
 
 type state = Game.result * Game.state
 
@@ -70,8 +70,8 @@ let render (self : self) =
     | Game.NoAction ->
       let cards = show_cards dealer in
       let hided_cards =
-        div ~class_name:"card" [|
-          div ~class_name:"back" [||]
+        div (props ~className:"card" ()) [|
+          div (props ~className:"back" ()) [||]
         |] in
       cards.(0) <- hided_cards;
       cards
@@ -79,40 +79,40 @@ let render (self : self) =
   let panel =
     match self.state with
     | Game.Playing, _ when last_action = Game.Stand ->
-      div ~class_name:"button-table" [|
-        button ~class_name:"disabled" ~disabled:true [| s "Hit" |];
-        button ~on_click:(fun _ -> self.send Stand) [| s "Stand" |]
+      div (props ~className:"button-table" ()) [|
+        button (props ~className:"disabled" ~disabled:true ()) [| s "Hit" |];
+        button (props ~onClick:(fun _ -> self.send Stand) ()) [| s "Stand" |]
       |]
     | Game.Playing, _ ->
-      div ~class_name:"button-table" [|
-        button ~on_click:(fun _ -> self.send Hit) [| s "Hit" |];
-        button ~on_click:(fun _ -> self.send Stand) [| s "Stand" |]
+      div (props ~className:"button-table" ()) [|
+        button (props ~onClick:(fun _ -> self.send Hit) ()) [| s "Hit" |];
+        button (props ~onClick:(fun _ -> self.send Stand) ()) [| s "Stand" |]
       |]
     | Game.Win, _ ->
-      div ~class_name:"result-table" [|
-        div [|
-          span ~class_name:"result win" [| s "You win!" |]
+      div (props ~className:"result-table" ()) [|
+        div (props ()) [|
+          span (props ~className:"result win" ()) [| s "You win!" |]
         |];
-        div [|
-          button ~on_click:(fun _ -> self.send Retry) [| s "Retry" |]
+        div (props ()) [|
+          button (props ~onClick:(fun _ -> self.send Retry) ()) [| s "Retry" |]
         |]
       |]
     | Game.Lose, _ ->
-      div ~class_name:"result-table" [|
-        div [|
-          span ~class_name:"result lose" [| s "You lose!" |]
+      div (props ~className:"result-table" ()) [|
+        div (props ()) [|
+          span (props ~className:"result lose" ()) [| s "You lose!" |]
         |];
-        div [|
-          button ~on_click:(fun _ -> self.send Retry) [| s "Retry" |]
+        div (props ()) [|
+          button (props ~onClick:(fun _ -> self.send Retry) ()) [| s "Retry" |]
         |]
       |] in
-  div [|
-    div ~class_name:"table-wrapper" [|
+  div (props ()) [|
+    div (props ~className:"table-wrapper" ()) [|
       render_cards_table dealer_cards;
-      span ~class_name:"cast-label" [| s "DEALER" |]
+      span (props ~className:"cast-label" ()) [| s "DEALER" |]
     |];
-    div ~class_name:"table-wrapper" [|
-      span ~class_name:"cast-label" [| s "PLAYER" |];
+    div (props ~className:"table-wrapper" ()) [|
+      span (props ~className:"cast-label" ()) [| s "PLAYER" |];
       render_cards_table player_cards
     |];
     panel
