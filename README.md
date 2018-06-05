@@ -3,6 +3,12 @@
 
 A BlackJack game by BuckleScript + ReasonReact.
 
+### Setup
+
+```
+npm install
+```
+
 ### Build
 ```
 npm run build
@@ -19,6 +25,10 @@ npm run watch
 ```
 npm run webpack
 ```
+
+### Serve
+
+Use your favourite one-line server!
 
 ## License
 
