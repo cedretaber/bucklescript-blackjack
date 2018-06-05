@@ -90,23 +90,23 @@ let render (self : self) =
       |]
     | Game.Win, _ ->
       div (props ~className:"result-table" ()) [|
-        div (props ()) [|
+        div' [|
           span (props ~className:"result win" ()) [| s "You win!" |]
         |];
-        div (props ()) [|
+        div' [|
           button (props ~onClick:(fun _ -> self.send Retry) ()) [| s "Retry" |]
         |]
       |]
     | Game.Lose, _ ->
       div (props ~className:"result-table" ()) [|
-        div (props ()) [|
+        div' [|
           span (props ~className:"result lose" ()) [| s "You lose!" |]
         |];
-        div (props ()) [|
+        div' [|
           button (props ~onClick:(fun _ -> self.send Retry) ()) [| s "Retry" |]
         |]
       |] in
-  div (props ()) [|
+  div' [|
     div (props ~className:"table-wrapper" ()) [|
       render_cards_table dealer_cards;
       span (props ~className:"cast-label" ()) [| s "DEALER" |]

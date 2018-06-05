@@ -10,6 +10,9 @@ let create_element tag props children =
 let div props children =
   create_element "div" props children
 
+let div' children =
+  div (props ()) children
+
 let span props children =
   create_element "span" props children
 
