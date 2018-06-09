@@ -41,8 +41,6 @@ let show_cards cards =
 let render_cards_table cards =
   div (props ~className:"play-table" ()) cards
 
-type state = Game.result * Game.state
-
 let initialState () = Game.Playing, Game.init ()
 
 type action
@@ -59,10 +57,8 @@ let reducer action state =
   | Retry, _ -> RR.Update (Game.Playing, Game.init ())
   | _ -> RR.NoUpdate
 
-type self = (state, RR.noRetainedProps, action) RR.self
-
-let render (self : self) =
-  let _, state = self.state in
+let render self =
+  let _, state = self.RR.state in
   let player, dealer, last_action = Game.split_state state in
   let player_cards = show_cards player in
   let dealer_cards =
