@@ -57,7 +57,7 @@ let reducer action state =
   | Stand, (Game.Playing, game_state) ->
     RR.Update (Game.next Game.Stand game_state)
   | Retry, _ -> RR.Update (Game.Playing, Game.init ())
-  | _ -> RR.Update state
+  | _ -> RR.NoUpdate
 
 type self = (state, RR.noRetainedProps, action) RR.self
 
